@@ -1,10 +1,14 @@
 import { ManagementClient } from 'auth0';
-import dotenv from 'dotenv';
+import { env } from '../server/env';
 
-dotenv.config();
+export function getAuth0Management() {
+  if (!env.AUTH0_DOMAIN || !env.AUTH0_CLIENT_ID || !env.AUTH0_CLIENT_SECRET) {
+    return null;
+  }
 
-export const auth0Management = new ManagementClient({
-  domain: process.env.AUTH0_DOMAIN!,
-  clientId: process.env.AUTH0_CLIENT_ID!,
-  clientSecret: process.env.AUTH0_CLIENT_SECRET!,
-});
+  return new ManagementClient({
+    domain: env.AUTH0_DOMAIN,
+    clientId: env.AUTH0_CLIENT_ID,
+    clientSecret: env.AUTH0_CLIENT_SECRET,
+  });
+}

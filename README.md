@@ -40,6 +40,12 @@ This repo ignores `.env` files by default. Create them locally as needed:
 - `backend/.env`
 - `frontend/.env.local`
 
+Backend required:
+- `DATABASE_URL` (Neon Postgres connection string)
+- `DATABASE_SSL` (`true` for Neon; optional)
+
+Tip: start from `backend/.env.example`.
+
 ## Git ignore notes
 Dependencies and build outputs are ignored:
 - `backend/node_modules`, `backend/dist`

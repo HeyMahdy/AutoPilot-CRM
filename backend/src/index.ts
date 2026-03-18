@@ -1,24 +1,19 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { createApp } from './server/app';
+import { env } from './server/env';
+import { migrate } from './server/migrate';
 
-import express, { Application, Request, Response } from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import authRoutes from './routes/auth';
+async function main() {
+  await migrate();
 
-const app: Application = express();
-const PORT = process.env.PORT || 5000;
+  const app = createApp();
+  app.listen(env.PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log(`API listening on http://localhost:${env.PORT}`);
+  });
+}
 
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-
-app.use('/api/auth', authRoutes);
-
-
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+main().catch((err) => {
+  // eslint-disable-next-line no-console
+  console.error(err);
+  process.exitCode = 1;
 });
-
-export default app;

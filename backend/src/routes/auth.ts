@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { checkJwt, extractUser, requireRole } from '../middleware/auth';
-import { auth0Management } from '../config/auth0';
+import { getAuth0Management } from '../config/auth0';
 
 const router = Router();
 
@@ -22,6 +22,12 @@ router.get('/rep-only', checkJwt, extractUser, requireRole('rep', 'admin'), (req
 // Test Auth0 Management API connection
 router.get('/test-auth0', async (req: Request, res: Response) => {
   try {
+    const auth0Management = getAuth0Management();
+    if (!auth0Management) {
+      res.status(400).json({ error: 'Auth0 env not configured' });
+      return;
+    }
+
     const response = await auth0Management.users.list({
       per_page: 5,
       page: 0,
