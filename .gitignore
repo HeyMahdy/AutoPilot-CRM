@@ -212,3 +212,19 @@ __marimo__/
 /frontend/node_modules/
 /frontend/.next/
 
+# Next.js / Node extras
+/frontend/out/
+/frontend/.turbo/
+/frontend/.vercel/
+/frontend/.swc/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
